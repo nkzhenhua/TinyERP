@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "apidoc": "^0.16.1",
-    "autoprefixer": "^6.3.7",
+    "autoprefixer": "10.3.1",
     "chai": "4.3.4",
     "chai-jquery": "2.1.0",
     "coveralls": "^2.11.6",
