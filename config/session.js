@@ -1,6 +1,6 @@
 'use strict';
-
-module.exports = function (connection, Store) {
+var MongoStore = require('connect-mongo');
+module.exports = function (connection, session) {
     process.env.SESSION_MAX_AGE = 31 * 24 * 60 * 60 * 1000;
 
     return {
@@ -9,10 +9,7 @@ module.exports = function (connection, Store) {
         resave           : false,
         rolling          : true,
         saveUninitialized: false,
-        store            : new Store({
-            mongooseConnection: connection,
-            reapInterval      : 500000
-        }),
+        store            : process.env.isDev ? new session.MemoryStore() : MongoStore.create({clientPromise: connection}),
 
         cookie: {
             path  : '/',
