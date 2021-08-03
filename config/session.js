@@ -1,7 +1,7 @@
 'use strict';
 var MongoStore = require('connect-mongo');
 module.exports = function (connection, session) {
-    process.env.SESSION_MAX_AGE = 31 * 24 * 60 * 60 * 1000;
+    process.env.SESSION_MAX_AGE = Number(31 * 24 * 60 * 60 * 1000);
 
     return {
         name             : 'pwd',
@@ -13,7 +13,7 @@ module.exports = function (connection, session) {
 
         cookie: {
             path  : '/',
-            maxAge: process.env.SESSION_MAX_AGE
+            maxAge: Number(process.env.SESSION_MAX_AGE)
         }
     };
 };

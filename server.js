@@ -65,7 +65,7 @@ mainDb.once('open', function callback() {
             };
 
             // mongodb://user:pass@host:port/database
-            const dbUri = util.format('mongodb://@%s:%d/%s', _db.url, _db.port, _db.DBname);
+            const dbUri = util.format('mongodb://%s:%d/%s', _db.url, _db.port, _db.DBname);
             var dbObject = mongoose.createConnection(dbUri, connectOptions);
 
             dbObject.on('error', function (err) {
