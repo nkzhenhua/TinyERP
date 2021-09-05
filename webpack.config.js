@@ -1,13 +1,19 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   context: path.resolve(__dirname, './'),
   entry: './public/js/main.js',
   devtool: 'source-map',
-  mode: 'development',
+  mode: 'production',
   output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name]_bundle.js',
+    path: path.resolve(__dirname, './public/dist'),
+  },
+  optimization: {
+    emitOnErrors: true,
+    minimize: false,
+    //chunkIds: 'named',
   },
   module: {
     rules: [
@@ -44,6 +50,9 @@ module.exports = {
       text: 'text-loader'
     }
   },
+  externals: {
+    gapi          : 'gapi'
+  },
   resolve: {
     extensions: [".js", ".json", ".jsx", ".css", ".html", '...'],
     enforceExtension: false,
@@ -63,13 +72,22 @@ module.exports = {
       Backbone       : 'backbone',
       socketio       : 'socket.io',
       templates      : path.join(__dirname, './public/templates'),
-      text           : 'test-loader',
-      common         : path.join(__dirname, './public/js/common.js'),
-      communication  : path.join(__dirname, './public/js/communication.js'),
-      helpers$        : path.join(__dirname, './public/js/helpers.js'),
-      helpers        : path.join(__dirname, './public/js/helpers'),
-      constants$      : path.join(__dirname, './public/js/constants.js'),
+      collections    : path.join(__dirname, './public/js/collections'),
       constants      : path.join(__dirname, './public/js/constants'),
+      helpers        : path.join(__dirname, './public/js/helpers'),
+      mixins         : path.join(__dirname, './public/js/mixins'),
+      models         : path.join(__dirname, './public/js/models'),
+      services       : path.join(__dirname, './public/js/services'),
+      views          : path.join(__dirname, './public/js/views'),
+      common$        : path.join(__dirname, './public/js/common.js'),
+      communication$ : path.join(__dirname, './public/js/communication.js'),
+      constants$     : path.join(__dirname, './public/js/constants.js'),
+      custom$        : path.join(__dirname, './public/js/custom.js'),
+      dataService$   : path.join(__dirname, './public/js/dataService.js'),
+      helpers$       : path.join(__dirname, './public/js/helpers.js'),
+      populate$      : path.join(__dirname, './public/js/populate.js'),
+      router$        : path.join(__dirname, './public/js/router.js'),
+      Validation$    : path.join(__dirname, './public/js/Validation.js'),
       dateFormat     : path.join(__dirname, './public/js/libs/date.format.js'),
       d3             : path.join(__dirname, './public/js/libs/d3.v3.min.js'),
       topojson       : path.join(__dirname, './public/js/libs/topojson.v0.min/index.js'),
@@ -77,10 +95,24 @@ module.exports = {
       malihuScrollBar: path.join(__dirname, './public/js/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar'),
       moment         : path.join(__dirname, './public/js/libs/moment/moment.js'),
       backstratch    : path.join(__dirname, './public/js/libs/jquery-backstretch/jquery.backstretch.min.js'),
-      wickedpicker   : path.join(__dirname, './public/js/libs/wickedpicker/dist/wickedpicker.min'),
-      bxSlider       : path.join(__dirname, './public/js/libs/bxslider-4/dist/jquery.bxslider.min'),
-      dragtable      : path.join(__dirname, './public/js/libs/dragtable/jquery.dragtable'),
-      gapi           : '//apis.google.com/js/platform'
+      wickedpicker   : path.join(__dirname, './public/js/libs/wickedpicker/dist/wickedpicker.min.js'),
+      bxSlider       : path.join(__dirname, './public/js/libs/bxslider-4/dist/jquery.bxslider.min.js'),
+      dragtable      : path.join(__dirname, './public/js/libs/dragtable/jquery.dragtable.js')
     }
-  }
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+       _: 'Underscore',
+       $: 'jQuery',
+       d3: 'd3',
+       io: 'socketio',
+       gapi: 'gapi',
+       topojson: 'topojson',
+       dateFormat: 'dateFormat',
+
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
+    }),
+  ],
 };
