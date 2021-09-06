@@ -5,7 +5,7 @@ module.exports = {
   context: path.resolve(__dirname, './'),
   entry: './public/js/main.js',
   devtool: 'source-map',
-  mode: 'production',
+  mode: 'development',
   output: {
     filename: '[name]_bundle.js',
     path: path.resolve(__dirname, './public/dist'),
@@ -13,7 +13,7 @@ module.exports = {
   optimization: {
     emitOnErrors: true,
     minimize: false,
-    //chunkIds: 'named',
+    chunkIds: 'named',
   },
   module: {
     rules: [
@@ -109,7 +109,6 @@ module.exports = {
        gapi: 'gapi',
        topojson: 'topojson',
        dateFormat: 'dateFormat',
-
     }),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1,

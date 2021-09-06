@@ -4,7 +4,7 @@ define([
     'Underscore',
     'text!templates/Degrees/TopBarTemplate.html',
     'custom',
-    'Common'
+    'common'
 ], function (Backbone, $, _, ContentTopBarTemplate, Custom, Common) {
     'use strict';
 

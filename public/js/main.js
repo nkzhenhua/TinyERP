@@ -90,6 +90,15 @@ require.config({
 */
 require(['Backbone', 'jQuery', 'app'], function (Backbone, $, app) {
 
+    var cache = {};
+
+    function importAll(r) {
+        r.keys().forEach(key => cache[key] = r(key));
+    }
+
+    importAll(require.context('views/', true, /\.js$/));
+    console.log({cache});
+
     App.render = function (data) {
         var container = this.errorContainer || $('#errorHandler');
         var messageClass = data.type || 'error';
